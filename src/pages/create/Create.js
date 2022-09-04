@@ -1,5 +1,7 @@
 import React from 'react'
 import { useState, useRef } from 'react'
+import { useFetch } from '../../hooks/useFetch'
+
 const Create = () => {
   const [title, setTitle] = useState('')
   const [method, setmethod] = useState('')
@@ -7,10 +9,18 @@ const Create = () => {
   const [newIngredient, setNewIngredient] = useState('')
   const [ingredients, setIngredients] = useState([])
   const ingredientInput = useRef(null)
-
+  const { postData, data, error } = useFetch(
+    'http://localhost:3000/recipes',
+    'POST',
+  )
   const handleSubmit = (ev) => {
     ev.preventDefault()
-    console.log(title, method, cookingTime, ingredients)
+    postData({
+      title,
+      ingredients,
+      method,
+      cookingTime: cookingTime + 'minutes',
+    })
   }
 
   const handleAdd = (ev) => {
@@ -49,7 +59,12 @@ const Create = () => {
             </button>
           </div>
         </label>
-        <p>Current ingredients: {ingredients.map(i => <em key={i}>{i},</em>)}</p>
+        <p>
+          Current ingredients:{' '}
+          {ingredients.map((i) => (
+            <em key={i}>{i},</em>
+          ))}
+        </p>
         <label>
           <span>Recipe Method:</span>
           <textarea
