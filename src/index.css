@@ -62,7 +62,11 @@ textarea {
   margin: 60px auto;
 }
 .create label span {
-  display: block;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 3.2;
+  row-gap: 2.4rem;
+  width: 480px;
   margin: 30px 0 10px;
 }
 .create p {
